@@ -6,7 +6,7 @@ import os
 USER_SETTINGS = getattr(settings, 'REST_CAPTCHA', None)
 
 FONT_PATH = os.path.join(
-    os.path.dirname(os.path.abspath(__file__)), 'fonts/Vera.ttf')
+    os.path.dirname(os.path.abspath(__file__)), '../fonts/Vera.ttf')
 
 DEFAULTS = {
     'CAPTCHA_CACHE': 'default',
