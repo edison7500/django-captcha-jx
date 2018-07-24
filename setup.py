@@ -1,13 +1,15 @@
 from setuptools import setup, find_packages
 from captcha import __version__
 # from setuptools.command.test import test as test_command
-import sys
+# import sys
 
 install_requires = [
     'Django >= 1.8',
     'Pillow >=2.2.2',
     'djangorestframework>=3.8',
 ]
+
+PACKAGE_DATA = ["fonts/*.ttf"]
 
 setup(
     name='django-captcha-jx',
@@ -16,7 +18,7 @@ setup(
     author_email='edison7500@gmail.com',
     url="https://bitbucket.org/papaya2018/django-captcha-jx",
     license='MIT',
-    packages=find_packages(exclude=['testproject', 'testproject.*']),
+    keywords=['captcha', 'django'],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
@@ -32,7 +34,9 @@ setup(
         'Topic :: Internet :: WWW/HTTP',
         'Framework :: Django',
     ],
+    packages=find_packages(exclude=['testproject', 'testproject.*']),
     include_package_data=True,
+    package_data={'captcha': PACKAGE_DATA, },
     zip_safe=False,
     install_requires=install_requires,
 )

@@ -21,8 +21,8 @@ DEFAULTS = {
     'CAPTCHA_LETTER_ROTATION': (-35, 35),
     'CAPTCHA_FOREGROUND_COLOR': '#001100',
     'CAPTCHA_BACKGROUND_COLOR': '#ffffff',
-    'FILTER_FUNCTION': 'applications.captcha.captcha.filter_default',
-    'NOISE_FUNCTION': 'applications.captcha.captcha.noise_default',
+    'FILTER_FUNCTION': 'captcha.challenge.filter_default',
+    'NOISE_FUNCTION': 'captcha.challenge.noise_default',
     # for tests access: MASTER_CAPTCHA: {'secret_key: secret_value'}
     'MASTER_CAPTCHA': {}
 }

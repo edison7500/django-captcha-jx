@@ -7,12 +7,23 @@ from PIL import (
     ImageFilter
 )
 
+from captcha import helpers
+
 try:
     from cStringIO import StringIO
 except ImportError:
     from io import BytesIO as StringIO
 
 from captcha.conf.settings import api_settings as settings
+
+
+def filter_default(image):
+    return helpers.filter_smooth(image, ImageFilter.SMOOTH)
+
+
+def noise_default(image, draw):
+    draw = helpers.noise_dots(draw, image, settings.CAPTCHA_FOREGROUND_COLOR)
+    draw = helpers.noise_arcs(draw, image, settings.CAPTCHA_FOREGROUND_COLOR)
 
 
 def getsize(font, text):
@@ -46,7 +57,7 @@ class Captcha(object):
     def generate_image(self):
         image = makeimg(self.size)
         for char in self.word:
-            fgimage = Image.new('RGB', size, settings.CAPTCHA_FOREGROUND_COLOR)
+            fgimage = Image.new('RGB', self.size, settings.CAPTCHA_FOREGROUND_COLOR)
             charimage = Image.new('L', getsize(self.font, ' %s ' % char), '#000000')
             chardraw = ImageDraw.Draw(charimage)
             chardraw.text((0, 0), ' %s ' % char, font=self.font, fill='#ffffff')
@@ -56,14 +67,14 @@ class Captcha(object):
                     angle, expand=0, resample=Image.BICUBIC)
 
             charimage = charimage.crop(charimage.getbbox())
-            maskimage = Image.new('L', size)
+            maskimage = Image.new('L', self.size)
 
-            xpos2 = xpos + charimage.size[0]
+            xpos2 = self.xpos + charimage.size[0]
             from_top2 = self.from_top + charimage.size[1]
-            maskimage.paste(charimage, (xpos, self.from_top, xpos2, from_top2))
+            maskimage.paste(charimage, (self.xpos, self.from_top, xpos2, from_top2))
             size = maskimage.size
             image = Image.composite(fgimage, image, maskimage)
-            xpos = xpos + 2 + charimage.size[0]
+            xpos = self.xpos + 2 + charimage.size[0]
 
         if settings.CAPTCHA_IMAGE_SIZE:
             # centering captcha on the image
