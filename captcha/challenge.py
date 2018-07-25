@@ -22,8 +22,9 @@ def filter_default(image):
 
 
 def noise_default(image, draw):
-    draw = helpers.noise_dots(draw, image, settings.CAPTCHA_FOREGROUND_COLOR)
-    draw = helpers.noise_arcs(draw, image, settings.CAPTCHA_FOREGROUND_COLOR)
+    color = settings.CAPTCHA_FOREGROUND_FUNCTION
+    draw = helpers.noise_dots(draw, image, color())
+    draw = helpers.noise_arcs(draw, image, color())
 
 
 def getsize(font, text):
