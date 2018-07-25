@@ -56,8 +56,6 @@ class Captcha(object):
         )
 
     def generate_image(self):
-        # xpos = 2
-        # from_top = 4
         image = makeimg(self.size)
         for char in self.word:
             fgimage = Image.new('RGB', self.size, settings.CAPTCHA_FOREGROUND_COLOR)
