@@ -13,7 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
 from captcha.views.api import CaptchaAPIView
 
@@ -21,6 +21,6 @@ from captcha.views.api import CaptchaAPIView
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
-
+    url(r'^captcha/', include('captcha.urls')),
     url(r'^api/captcha/?$', CaptchaAPIView.as_view()),
 ]

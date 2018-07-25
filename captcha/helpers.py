@@ -18,6 +18,16 @@ def random_char_challenge(length):
     return ret
 
 
+def random_color():
+    return (
+        random.randrange(
+            120, 255), random.randrange(
+            120, 255), random.randrange(
+            120, 255), random.randrange(
+            230, 255)
+    )
+
+
 def math_challenge():
     operators = ('+', '*', '-',)
     operands = (random.randint(1, 10), random.randint(1, 10))
@@ -43,10 +53,8 @@ def noise_dots(draw, image, fill):
     return draw
 
 
-def noise_arcs(draw, image, fill):
+def noise_arcs(draw, image):
     size = image.size
-    draw.arc([-20, -20, size[0], 20], 0, 295, fill=fill)
-    draw.line([-20, 20, size[0] + 20, size[1] - 20], fill=fill)
-    draw.line([-20, 0, size[0] + 20, size[1]], fill=fill)
+    for p in range(int(size[0] * size[1] * 0.1)):
+        draw.point((random.randint(0, size[0]), random.randint(0, size[1])), fill=random_color())
     return draw
-

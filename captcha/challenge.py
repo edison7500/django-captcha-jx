@@ -55,6 +55,8 @@ class Captcha(object):
         )
 
     def generate_image(self):
+        # xpos = 2
+        # from_top = 4
         image = makeimg(self.size)
         for char in self.word:
             fgimage = Image.new('RGB', self.size, settings.CAPTCHA_FOREGROUND_COLOR)
@@ -74,17 +76,17 @@ class Captcha(object):
             maskimage.paste(charimage, (self.xpos, self.from_top, xpos2, from_top2))
             size = maskimage.size
             image = Image.composite(fgimage, image, maskimage)
-            xpos = self.xpos + 2 + charimage.size[0]
+            self.xpos = self.xpos + 2 + charimage.size[0]
 
         if settings.CAPTCHA_IMAGE_SIZE:
             # centering captcha on the image
             tmpimg = makeimg(size)
-            xpos2 = int((size[0] - xpos) / 2)
+            xpos2 = int((size[0] - self.xpos) / 2)
             from_top2 = int((size[1] - charimage.size[1]) / 2 - self.from_top)
             tmpimg.paste(image, (xpos2, from_top2))
             image = tmpimg.crop((0, 0, size[0], size[1]))
         else:
-            image = image.crop((0, 0, xpos + 1, size[1]))
+            image = image.crop((0, 0, self.xpos + 1, size[1]))
 
         draw = ImageDraw.Draw(image)
 
