@@ -16,11 +16,13 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from captcha.views.api import CaptchaAPIView
-
+from views import TestCaptchaFormView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
-    url(r'^captcha/', include('captcha.urls')),
+    url(r'^test-captcha/?$', TestCaptchaFormView.as_view()),
     url(r'^api/captcha/?$', CaptchaAPIView.as_view()),
+
+    url(r'^captcha/', include('captcha.urls')),
 ]

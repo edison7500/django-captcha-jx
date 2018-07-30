@@ -5,9 +5,11 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.core.cache import caches
+from django.views.generic import TemplateView
 from captcha.conf.settings import api_settings
 from captcha import helpers
 from captcha.challenge import Captcha
+from forms import TestCaptchaForm
 
 cache = caches[api_settings.CAPTCHA_CACHE]
 
@@ -37,3 +39,15 @@ class CaptchaAPIView(APIView):
 
     def get(self, request):
         return self._generate_captcha(request)
+
+
+class TestCaptchaFormView(TemplateView):
+    template_name = 'captcha.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(TestCaptchaFormView, self).get_context_data(**kwargs)
+        context.update(
+            {'form': TestCaptchaForm()}
+        )
+
+        return context

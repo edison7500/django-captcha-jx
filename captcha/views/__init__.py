@@ -20,5 +20,5 @@ class CaptchaView(View):
         cache_key = helpers.get_cache_key(key)
         cache.set(cache_key, value, api_settings.CAPTCHA_TIMEOUT)
         image_bytes = Captcha(word=value).generate_image()
-
+        request.session["captcha"] = cache_key
         return HttpResponse(content=image_bytes, content_type='image/png')
