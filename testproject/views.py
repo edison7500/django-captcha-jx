@@ -47,6 +47,13 @@ class TestCaptchaFormView(generic.FormView):
     form_class = TestCaptchaForm
     success_url = '/captcha-success/'
 
+    def get_form_kwargs(self):
+        kwargs = super(TestCaptchaFormView, self).get_form_kwargs()
+        kwargs.update({
+            "request": self.request,
+        })
+        return kwargs
+
 
 class CaptchaSuccessView(generic.TemplateView):
     template_name = 'captcha_success.html'

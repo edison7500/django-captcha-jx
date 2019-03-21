@@ -1,7 +1,10 @@
+import logging
 from django import forms
 from django.core.urlresolvers import reverse
 from django.forms.utils import flatatt
 from django.utils.html import format_html
+
+logger = logging.getLogger('captcha')
 
 
 class CaptchaTextInput(forms.Widget):
@@ -32,6 +35,10 @@ class CaptchaField(forms.Field):
 
     def __init__(self, *args, **kwargs):
         super(CaptchaField, self).__init__(*args, **kwargs)
+
+    def validate(self, value):
+        logger.info(value)
+        super().validate(value)
 
     def clean(self, value):
         super(CaptchaField, self).clean(value)
