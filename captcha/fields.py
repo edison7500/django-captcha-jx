@@ -21,7 +21,7 @@ class CaptchaTextInput(forms.Widget):
         return reverse('captcha-image')
 
     def render(self, name, value, attrs=None, renderer=None):
-        final_attrs = self.build_attrs(base_attrs={"name":name}, extra_attrs=attrs)
+        final_attrs = self.build_attrs(base_attrs={"name": name}, extra_attrs=attrs)
         _input = format_html(u'<input{} />', flatatt(final_attrs))
         _code_img = format_html(u'<img class="c-image" src={image_url}>'.format(image_url=self.image_url()))
         return _input + _code_img

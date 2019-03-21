@@ -1,11 +1,12 @@
 import base64
 import uuid
 
+from django.urls import reverse
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.core.cache import caches
-from django.views.generic import TemplateView
+from django.views import generic
 from captcha.conf.settings import api_settings
 from captcha import helpers
 from captcha.challenge import Captcha
@@ -41,13 +42,11 @@ class CaptchaAPIView(APIView):
         return self._generate_captcha(request)
 
 
-class TestCaptchaFormView(TemplateView):
+class TestCaptchaFormView(generic.FormView):
     template_name = 'captcha.html'
+    form_class = TestCaptchaForm
+    success_url = '/captcha-success/'
 
-    def get_context_data(self, **kwargs):
-        context = super(TestCaptchaFormView, self).get_context_data(**kwargs)
-        context.update(
-            {'form': TestCaptchaForm()}
-        )
 
-        return context
+class CaptchaSuccessView(generic.TemplateView):
+    template_name = 'captcha_success.html'

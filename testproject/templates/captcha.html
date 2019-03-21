@@ -5,9 +5,9 @@
     <title>Captcha</title>
 </head>
 <body>
-<form>
+<form method="post">
+    {% csrf_token %}
     {{ form }}
-
     <button type="submit">submit</button>
 </form>
 </body>
